@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% block body %}
+<div class="container mt-4">
+  <h2>Add Task</h2>
+  <form action="/" method="POST">
+    <div class="my-3">
+      <label for="title" class="form-label">Enter To Do Title :</label>
+      <input type="text" class="form-control" id="title" aria-describedby="emailHelp" name="title" />
+      <div class="my-3">
+        <label for="description" class="form-label">Enter To Do Description :</label>
+        <input type="text" class="form-control" id="description" name="description" />
+      </div>
+      <button type="submit" class="btn btn-outline-info">Submit</button>
+  </form>
+  <h2 class="my-3">Your Tasks</h2>
+  {% if tasks|length == 0 %}
+  <div class="alert alert-warning" role="alert">
+  No Tasks To Display . Add Tasks .
+</div>
+  {% else %}
+  <table class="table table-bordered table-hover my-3">
+    <thead>
+      <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for task in tasks %}
+      <tr>
+        <th scope="row">{{loop.index}}</th>
+        <td>{{task.title}}</td>
+        <td>{{task.description}}</td>
+        <td><a href="update/{{task.sno}}" class="btn btn-outline-primary btn-sm me-1">Update</a><a
+            href="delete/{{task.sno}}" class="btn btn-outline-danger btn-sm">Delete</a></td>
+      </tr>
+    </tbody>
+  </table>
+  {% endfor %}
+  {% endif %}
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+</div>
+{% endblock body %}
