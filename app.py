@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root@localhost/flask-todolist"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todolist.db"
 db = SQLAlchemy(app)
 
 
