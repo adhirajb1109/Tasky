@@ -45,12 +45,24 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            {% if session.name %}
             <li class="nav-item">
-              {% if session.name %}
-              <a class="nav-link active" href="/logout">Logout</a>
-              {% else %}
-              <a class="nav-link active" href="/login">Login</a>
-              {% endif %}
+               <li class="nav-item dropdown me-3">
+          <a class="nav-link active dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ session.name }}
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+          </ul>
+        </li>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/login">Login</a>
+            </li>
+            {% endif %}
             </li>
           </ul>
         </div>
