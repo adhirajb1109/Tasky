@@ -20,8 +20,6 @@ class Database(db.Model):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    if not session.get("name", "email"):
-        return render_template("login.html")
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']

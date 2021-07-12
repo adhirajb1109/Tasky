@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% block body %}
-<div class="container mt-4">
+  {% if session.name %}
+  <div class="container mt-4">
   <h2>Add Task</h2>
   <form action="/" method="POST">
     <div class="my-3">
@@ -14,8 +15,8 @@
   <h2 class="my-3">Your Tasks</h2>
   {% if tasks|length == 0 %}
   <div class="alert alert-warning" role="alert">
-  No Tasks To Display . Add Tasks .
-</div>
+    No Tasks To Display . Add Tasks .
+  </div>
   {% else %}
   <table class="table table-bordered table-hover my-3">
     <thead>
@@ -37,11 +38,14 @@
       </tr>
     </tbody>
   </table>
+  </div>
   {% endfor %}
   {% endif %}
+{% else %}
+  <div class="container my-5 border border-info border-3 rounded p-3">
+    <h1 class="text-center">Welcome To Tasky !</h1>
+    <h2 class="text-center"><a href="/login" class="text-decoration-none text-info">Login</a> To Get Started !</h2>
+  </div>
+  {% endif %}
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
-</div>
 {% endblock body %}
