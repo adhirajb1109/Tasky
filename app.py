@@ -20,6 +20,8 @@ class Database(db.Model):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    if not session.get("name", "email"):
+        return render_template("login.html")
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
@@ -28,10 +30,7 @@ def index():
         db.session.add(task)
         db.session.commit()
     tasks = Database.query.all()
-    if not session.get("name", "email"):
-        return redirect("/login")
-    else:
-      return render_template("index.html", tasks=tasks)
+    return render_template("index.html", tasks=tasks)
 
 
 @app.route("/login", methods=["GET", "POST"])
