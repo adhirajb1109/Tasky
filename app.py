@@ -1,7 +1,10 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
-
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todolist.db"
 db = SQLAlchemy(app)
 
@@ -25,7 +28,26 @@ def index():
         db.session.add(task)
         db.session.commit()
     tasks = Database.query.all()
-    return render_template("index.html", tasks=tasks)
+    if not session.get("name", "email"):
+        return redirect("/login")
+    else:
+      return render_template("index.html", tasks=tasks)
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        session["name"] = request.form.get("name")
+        session["email"] = request.form.get("email")
+        return redirect("/")
+    return render_template("login.html")
+
+
+@app.route("/logout")
+def logout():
+    session["name"] = None
+    session["email"] = None
+    return redirect("/")
 
 
 @app.route("/update/<int:sno>", methods=["GET", "POST"])

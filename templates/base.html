@@ -41,11 +41,11 @@
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link active"
-                href="https://contact-adhiraj.herokuapp.com"
-                >Contact Developer</a
-              >
+              {% if session.name %}
+              <a class="nav-link active" href="/logout">Logout</a>
+              {% else %}
+              <a class="nav-link active" href="/login">Login</a>
+              {% endif %}
             </li>
           </ul>
         </div>
