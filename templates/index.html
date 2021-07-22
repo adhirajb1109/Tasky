@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block body %}
-  {% if session.name %}
+  
   <div class="container mt-4">
   <h2>Add Task</h2>
   <form action="/" method="POST">
@@ -41,11 +41,4 @@
   </div>
   {% endfor %}
   {% endif %}
-{% else %}
-  <div class="container my-5 border border-info border-3 rounded p-3">
-    <h1 class="text-center">Welcome To Tasky !</h1>
-    <h2 class="text-center"><a href="/login" class="text-decoration-none text-info">Login</a> To Get Started !</h2>
-  </div>
-  {% endif %}
-
 {% endblock body %}
