@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 import os
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL" , "sqlite:///tasky.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://ejpqmwcnhklewj:252c88f39e2a84aacef2e6d6d5bbbd74c08e40f5a8922c091f8bc56579c613eb@ec2-35-171-57-132.compute-1.amazonaws.com:5432/d7lo78m49po7m1"
 db = SQLAlchemy(app)
 
 
