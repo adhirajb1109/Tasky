@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import StringField , SubmitField
 from wtforms.validators import DataRequired , length
 app = Flask(__name__)
@@ -18,7 +18,7 @@ class Tasky(db.Model):
         return f"{self.sno} - {self.title}"
 
 
-class TaskForm(Form):
+class TaskForm(FlaskForm):
     title = StringField('Enter Task Title :', validators=[DataRequired() , length(max=200)])
     description = StringField('Enter Task Description :', validators=[DataRequired() , length(max=500)])
     submit = SubmitField('Submit')
