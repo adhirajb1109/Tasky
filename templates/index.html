@@ -4,13 +4,18 @@
   <h2>Add Task</h2>
   <form action="/" method="POST">
     <div class="my-3">
-      <label for="title" class="form-label">Enter Task Title :</label>
-      <input type="text" class="form-control" id="title" aria-describedby="emailHelp" name="title" />
-      <div class="my-3">
-        <label for="description" class="form-label">Enter Task Description :</label>
-        <input type="text" class="form-control" id="description" name="description" />
-      </div>
-      <button type="submit" class="btn btn-outline-info">Submit</button>
+      {{ form.title.label }}
+      <br>
+      <br>
+      {{ form.title(class_="form-control") }}
+    <div class="my-3">
+        {{ form.description.label }}
+        <br>
+        <br>
+        {{ form.description(class_="form-control") }}
+    </div>
+    {{form.csrf_token}}
+    {{form.submit(class_="btn btn-outline-dark")}}
   </form>
   <h2 class="my-3">Your Tasks</h2>
   {% if tasks|length == 0 %}
