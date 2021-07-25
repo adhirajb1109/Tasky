@@ -9,8 +9,10 @@ flask-sqlalchemy = "*"
 gunicorn = "*"
 flask-wtf = "*"
 wtforms = "*"
+flask-login = "*"
 
 [dev-packages]
+autopep8 = "*"
 
 [requires]
 python_version = "3.8"
