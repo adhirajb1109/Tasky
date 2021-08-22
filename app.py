@@ -7,7 +7,11 @@ from wtforms.validators import DataRequired, length
 from flask_login import UserMixin, login_user, LoginManager, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tasky.db"
+ENV = 'prod'
+if ENV == 'prod':
+    app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://izcvtykacioihc:862e7c07db4b6ca93b32ac70207c362f5593690ae5a04a5efad56ee71e3ab47d@ec2-34-194-14-176.compute-1.amazonaws.com:5432/dcl271s5lumckr"
+else:
+    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:postgres@localhost/tasky"
 app.config["SECRET_KEY"] = "Secret Key"
 db = SQLAlchemy(app)
 login_manager = LoginManager()
@@ -19,7 +23,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-class Tasky(db.Model):
+class Tasks(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     description = db.Column(db.String(500), nullable=False)
@@ -102,45 +106,46 @@ def logout():
     return redirect("/")
 
 
-@ app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == 'POST':
         form = TaskForm()
         if form.validate_on_submit():
             title = request.form['title']
             description = request.form['description']
-            task = Tasky(title=title,
+            task = Tasks(title=title,
                          description=description)
             db.session.add(task)
             db.session.commit()
-    tasks = Tasky.query.all()
+    tasks = Tasks.query.all()
     return render_template("index.html", tasks=tasks, form=TaskForm())
 
 
-@ app.route("/update/<int:sno>", methods=["GET", "POST"])
+@app.route("/update/<int:sno>", methods=["GET", "POST"])
 def update(sno):
     if request.method == 'POST':
         form = TaskForm()
         if form.validate_on_submit():
             title = request.form['title']
             description = request.form['description']
-            task = Tasky.query.filter_by(sno=sno).first()
+            task = Tasks.query.filter_by(sno=sno).first()
             task.title = title
             task.description = description
             db.session.add(task)
             db.session.commit()
         return redirect('/')
-    task = Tasky.query.filter_by(sno=sno).first()
+    task = Tasks.query.filter_by(sno=sno).first()
     return render_template("update.html", task=task, form=TaskForm())
 
 
-@ app.route("/delete/<int:sno>")
+@app.route("/delete/<int:sno>")
 def delete(sno):
-    tasks = Tasky.query.filter_by(sno=sno).first()
+    tasks = Tasks.query.filter_by(sno=sno).first()
     db.session.delete(tasks)
     db.session.commit()
     return redirect('/')
 
 
 if __name__ == "__main__":
+    db.create_all()
     app.run(debug=True, host="0.0.0.0")
