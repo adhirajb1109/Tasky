@@ -7,7 +7,7 @@ from wtforms.validators import DataRequired, length
 from flask_login import UserMixin, login_user, LoginManager, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:postgres@localhost/tasky"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:postgres@localhost:5432/tasky"
 app.config["SECRET_KEY"] = "Secret Key"
 db = SQLAlchemy(app)
 login_manager = LoginManager()
